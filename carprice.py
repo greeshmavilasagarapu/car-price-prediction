@@ -56,14 +56,14 @@ def load_model_and_preprocessors(df):
 	X_scaled = scaler.fit_transform(X)
 	model = RandomForestRegressor()
 	model.fit(X_scaled, y)
-	return model, scaler, encoders, X, categorical_cols
+	return model, scaler, encoders, X, categorical_cols, X_scaled, y
 
 # Load dataset once
 orig_df = load_data()
 df = orig_df.dropna(subset=['Price']).copy()
 
 # Train model once per session (cached)
-model, scaler, encoders, X, categorical_cols = load_model_and_preprocessors(df)
+model, scaler, encoders, X, categorical_cols, X_scaled, y = load_model_and_preprocessors(df)
 
 
 # Display metrics
@@ -89,6 +89,7 @@ if st.button("Predict"):
 	input_scaled = scaler.transform(input_df)
 	prediction = model.predict(input_scaled)
 	st.success(f"💰 Estimated Car Price: ₹ {prediction[0]:,.2f}")
+
 
 
 
