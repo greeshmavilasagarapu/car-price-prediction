@@ -43,25 +43,20 @@ y = df['Price']
 def load_model_and_preprocessors(df):
 	categorical_cols = [col for col in df.columns if df[col].dtype == 'object']
 	encoders = {}
-    for col in categorical_cols:
+	for col in categorical_cols:
 		le = LabelEncoder()
-        df[col] = le.fit_transform(df[col].astype(str))
-        encoders[col] = le
-
-    if 'Year' in df.columns:
-        df['Car_Age'] = 2025 - df['Year']
-        df.drop('Year', axis=1, inplace=True)
-
-    X = df.drop('Price', axis=1)
-    y = df['Price']
-
-    scaler = StandardScaler()
-    X_scaled = scaler.fit_transform(X)
-
-    model = RandomForestRegressor()
-    model.fit(X_scaled, y)
-
-    return model, scaler, encoders, X, categorical_cols
+		df[col] = le.fit_transform(df[col].astype(str))
+		encoders[col] = le
+	if 'Year' in df.columns:
+		df['Car_Age'] = 2025 - df['Year']
+		df.drop('Year', axis=1, inplace=True)
+	X = df.drop('Price', axis=1)
+	y = df['Price']
+	scaler = StandardScaler()
+	X_scaled = scaler.fit_transform(X)
+	model = RandomForestRegressor()
+	model.fit(X_scaled, y)
+	return model, scaler, encoders, X, categorical_cols
 
 # Load dataset once
 orig_df = load_data()
@@ -94,6 +89,7 @@ if st.button("Predict"):
 	input_scaled = scaler.transform(input_df)
 	prediction = model.predict(input_scaled)
 	st.success(f"💰 Estimated Car Price: ₹ {prediction[0]:,.2f}")
+
 
 
 
