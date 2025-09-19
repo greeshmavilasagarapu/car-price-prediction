@@ -12,7 +12,7 @@ SCALER_PATH = "scaler.joblib"
 ENCODERS_PATH = "encoders.joblib"
 @st.cache_data
 def load_data():
-	url="https://raw.githubusercontent.com/greeshmavilasagarapu/car-price-prediction/refs/heads/main/car_sales_data.csv"
+	url="https://raw.githubusercontent.com/greeshmavilasagarapu/car-price-prediction/main/car_sales_data.csv"
 	return pd.read_csv(url)
 orig_df = load_data()
 st.title("🚗 Car Price Prediction App")
@@ -77,3 +77,4 @@ if st.button("Predict"):
 	input_scaled = scaler.transform(input_df)
 	prediction = model.predict(input_scaled)
 	st.success(f"💰 Estimated Car Price: ₹ {prediction[0]:,.2f}")
+
