@@ -42,7 +42,7 @@ y = df['Price']
 @st.cache_resource
 def load_model_and_preprocessors(df):
 	categorical_cols = [col for col in df.columns if df[col].dtype == 'object']
-    encoders = {}
+	encoders = {}
     for col in categorical_cols:
 		le = LabelEncoder()
         df[col] = le.fit_transform(df[col].astype(str))
@@ -94,5 +94,6 @@ if st.button("Predict"):
 	input_scaled = scaler.transform(input_df)
 	prediction = model.predict(input_scaled)
 	st.success(f"💰 Estimated Car Price: ₹ {prediction[0]:,.2f}")
+
 
 
